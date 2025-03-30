@@ -1,0 +1,9 @@
+<h2>Checkout</h2>
+<ul>
+    {% for item in cart_items %}
+        <li>{{ item.product.name }} - Quantity: {{ item.quantity }}</li>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <button type="submit">Confirm Order</button>
+</form>

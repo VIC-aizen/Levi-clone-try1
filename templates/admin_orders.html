@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>All Orders</h1>
+    <table border="1">
+        <tr>
+            <th>Order ID</th>
+            <th>User ID</th>
+            <th>Order Status</th>
+            <th>Payment Status</th>  <!-- ✅ Ensuring Correct Payment Status -->
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.order_id }}</td>
+            <td>{{ order.user_id }}</td>
+            <td>{{ order.order_status }}</td>  <!-- ✅ Order Status from Orders Table -->
+            <td>
+                {% if order.payment_status == 'Success' %}
+                    ✅ Success
+                {% else %}
+                    ❌ Not Paid
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('admin.admin_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Edit Product</h1>
+    <form method="POST">
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ product.name }}" required><br>
+        
+        <label>Price:</label>
+        <input type="number" name="price" value="{{ product.price }}" required><br>
+        
+        <label>Stock:</label>
+        <input type="number" name="stock" value="{{ product.stock }}" required><br>
+        
+        <label>Supplier:</label>
+        <select name="supplier_id" required>
+            {% for supplier in suppliers %}
+                <option value="{{ supplier.supplier_id }}" {% if product.supplier_id == supplier.supplier_id %}selected{% endif %}>
+                    {{ supplier.name }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <button type="submit">Update Product</button>
+    </form>
+    <a href="{{ url_for('admin.view_products') }}">⬅️ Back to Products</a>
+</body>
+</html>

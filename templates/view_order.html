@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    <h1>Order Details</h1>
+    <p>Your order details will be displayed here.</p>
+
+    <h2>Order Items</h2>
+    {% if order_items %}
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>No items found in this order.</p>
+    {% endif %}
+
+    <div class="order">
+        <h3>Order ID: {{ order.order_id }}</h3>
+        <p>Total Price: ₹{{ order.total_amount }}</p>
+        <p>Status: {{ order.status }}</p>
+
+        <!-- Show payment button only if order is not already paid -->
+{% if payment and payment.status == 'Success' %}
+    <p><strong>✅ Payment Completed</strong></p>
+{% else %}
+    <form action="{{ url_for('user.process_payment') }}" method="post">
+        <input type="hidden" name="order_id" value="{{ order.order_id }}">
+        
+        <label>Select Payment Method:</label>
+        <select name="payment_method" required>
+            <option value="COD">Cash on Delivery</option>
+            <option value="Online">Online Payment</option>
+        </select>
+
+        <button type="submit">Confirm</button>
+    </form>
+{% endif %}
+
+    </div>
+</body>
+</html>

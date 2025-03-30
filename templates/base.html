@@ -1,0 +1,6 @@
+{% if session["user_id"] %}
+<a href="{{ url_for('user.dashboard') }}">👤 Dashboard</a>
+<a href="{{ url_for('auth.logout') }}">🚪 Logout</a>
+{% else %}
+<a href="{{ url_for('auth.login') }}">🔑 Login</a>
+{% endif %}

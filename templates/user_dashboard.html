@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <h1>Welcome, {{ user.username }}</h1>
+
+    <h2>Your Orders</h2>
+    {% if orders %}
+    <table border="1">
+        <tr>
+            <th>Order ID</th>
+            <th>Total Amount</th>
+            <th>Payment Status</th>
+            <th>Order Status</th>
+            <th>View Details</th>
+        </tr>
+        {% for order_id, total_amount, shipping_status, payment_status in orders %}
+        <tr>
+            <td>{{ order_id }}</td>
+            <td>₹{{ total_amount }}</td>
+
+            <!-- ✅ Payment Status (Corrected) -->
+            <td>
+                {% if payment_status == 'Success' %}
+                    ✅ Success
+                {% else %}
+                    ❌ Not Paid
+                {% endif %}
+            </td>
+
+            <!-- 🚚 Shipping Status (Pending, Shipped, Delivered) -->
+            <td>
+                {% if shipping_status %}
+                    📦 {{ shipping_status }}
+                {% else %}
+                    🚫 Not Shipped
+                {% endif %}
+            </td>
+
+            <td><a href="{{ url_for('user.view_order', order_id=order_id) }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>  <!-- ✅ Closing table properly -->
+    {% else %}
+    <p>No orders yet.</p>
+    {% endif %}
+
+    <h2>Actions</h2>
+    <a href="{{ url_for('cart.view_cart') }}">🛒 View Cart</a>
+    <a href="{{ url_for('product.view_products') }}">🛍️ Browse Products</a>
+    <a href="{{ url_for('user.logout') }}">🚪 Logout</a>
+
+</body>
+
+</html>

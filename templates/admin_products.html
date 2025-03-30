@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Products</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>All Products</h1>
+    <a href="{{ url_for('admin.add_product') }}">➕ Add New Product</a>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Supplier ID</th>
+            <th>Actions</th>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.product_id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.stock }}</td>
+            <td>{{ product.supplier_id }}</td>
+            <td>
+                <a href="{{ url_for('admin.edit_product', product_id=product.product_id) }}">✏️ Edit</a>
+                <form action="{{ url_for('admin.delete_product', product_id=product.product_id) }}" method="POST" style="display:inline;">
+                    <button type="submit">🗑️ Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('admin.admin_dashboard') }}">⬅️ Back to Dashboard</a>
+</body>
+</html>

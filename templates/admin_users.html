@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>All Users</h1>
+    <table border="1">
+        <tr>
+            <th>User ID</th>
+            <th>Email</th>
+            <th>Username</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for('admin.admin_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
